@@ -1,8 +1,14 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import cors from 'cors';  // Import cors
+
 const app = express();
 const port = process.env.PORT || 3000;
 
+// Enable CORS for all routes
+app.use(cors());
+
+// Use body-parser to parse JSON bodies
 app.use(bodyParser.json());
 
 const user_id = "john_doe_17091999";
@@ -39,6 +45,7 @@ const handleFileValidation = (file_b64) => {
     return { file_valid, file_mime_type, file_size_kb };
 };
 
+// POST route for BFHL
 app.post('/bfhl', (req, res) => {
     const { data, file_b64 } = req.body;
 
@@ -84,12 +91,14 @@ app.post('/bfhl', (req, res) => {
     });
 });
 
+// GET route
 app.get('/bfhl', (req, res) => {
     res.json({
         operation_code: 1
     });
 });
 
+// Start server
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
